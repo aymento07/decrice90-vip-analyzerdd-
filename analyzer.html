@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تحليل نتائج ال13 - decrice90 VIP</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #f1f1f1;
+      font-family: 'Arial', sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      color: gold;
+      text-align: center;
+    }
+    textarea, input {
+      width: 100%;
+      background-color: #222;
+      color: #fff;
+      border: 1px solid #444;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    textarea {
+      height: 120px;
+    }
+    button {
+      background-color: gold;
+      color: #111;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      display: block;
+      margin: auto;
+    }
+    #output {
+      background-color: #222;
+      border: 1px solid #333;
+      padding: 15px;
+      margin-top: 20px;
+    }
+    .highlight {
+      color: lime;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>تحليل نتائج الـ13 🧠 - decrice90 VIP</h1><label>📥 نتائج الـ13 (مثال: 1-1, 2-0, 3-1...):</label>
+
+  <textarea id="inputResults" placeholder="اكتب النتائج هنا مفصولة بفاصلة"></textarea><label>📊 أودز فوز الفريق A:</label> <input type="number" id="oddA" placeholder="مثال: 1.85" step="0.01">
+
+<label>📊 أودز فوز الفريق B:</label> <input type="number" id="oddB" placeholder="مثال: 3.90" step="0.01">
+
+<button onclick="analyze()">🔍 حلّل الآن</button>
+
+  <div id="output"></div>
+  <audio id="sound" src="https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.wav"></audio>  <script>
+    function analyze() {
+      const input = document.getElementById("inputResults").value;
+      const oddA = parseFloat(document.getElementById("oddA").value);
+      const oddB = parseFloat(document.getElementById("oddB").value);
+      const results = input.split(",").map(r => r.trim());
+      const output = document.getElementById("output");
+      const beep = document.getElementById("sound");
+
+      if (results.length !== 13) {
+        output.innerHTML = '<span style="color:red">⚠️ يجب إدخال 13 نتيجة بالضبط!</span>';
+        return;
+      }
+
+      let defensive = 0, offensive = 0, balanced = 0;
+      let totalGoals = 0;
+
+      results.forEach(score => {
+        const [a, b] = score.split("-").map(Number);
+        const total = a + b;
+        totalGoals += total;
+        if (total === 0) defensive++;
+        else if (total >= 4) offensive++;
+        else balanced++;
+      });
+
+      let matchType = "";
+      if (offensive >= 5) matchType = "هجومية 🔴";
+      else if (defensive >= 5) matchType = "دفاعية 🔵";
+      else matchType = "متوازنة 🟡";
+
+      let avgGoals = (totalGoals / 13).toFixed(2);
+      let oddsComment = "";
+
+      if (oddA < 2 && oddB > 3.5 && matchType === "دفاعية 🔵") {
+        oddsComment = "⚠️ هناك احتمال تمويه: الأودز لا تتطابق مع نمط دفاعي.";
+        beep.play();
+      } else if (oddA > 3 && matchType === "هجومية 🔴") {
+        oddsComment = "⚠️ تمويه محتمل: الفريق الأضعف بالنظر للأودز قد يسجل أكثر.";
+        beep.play();
+      } else {
+        oddsComment = "✅ لا توجد مؤشرات تمويه واضحة حسب الأودز.";
+      }
+
+      output.innerHTML = `
+        ✅ عدد النتائج الدفاعية: <span class="highlight">${defensive}</span><br>
+        ✅ عدد النتائج الهجومية: <span class="highlight">${offensive}</span><br>
+        ✅ عدد النتائج المتوازنة: <span class="highlight">${balanced}</span><br>
+        📊 متوسط الأهداف الكلي: <span class="highlight">${avgGoals}</span><br><br>
+        🔍 <strong>نمط المباراة العام:</strong> <span class="highlight">${matchType}</span><br>
+        🎯 <strong>تحليل الأودز:</strong> ${oddsComment}<br>
+      `;
+    }
+  </script></body>
+</html>
